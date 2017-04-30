@@ -1,0 +1,29 @@
+{
+  "name": "quiz",
+  "version": "1.0.0",
+  "description": "quiz app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoannaAsia/Brainly-challenge.git"
+  },
+  "keywords": [
+    "quiz",
+    "app",
+    "internship",
+    "challenge"
+  ],
+  "author": "joanna wojcik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoannaAsia/Brainly-challenge/issues"
+  },
+  "homepage": "https://github.com/JoannaAsia/Brainly-challenge#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "lite-server": "^2.3.0"
+  }
+}
