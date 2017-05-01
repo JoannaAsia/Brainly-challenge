@@ -1,6 +1,7 @@
-//load our external JSON
-var xhr = new XMLHttpRequest();
-xhr.open('GET', 'https://cdn.rawgit.com/kdzwinel/cd08d08002995675f10d065985257416/raw/811ad96a0567648ff858b4f14d0096ba241f28ef/quiz-data.json');
+//load the external JSON
+var xhr = new XMLHttpRequest(),
+	urlJSON = 'https://cdn.rawgit.com/kdzwinel/cd08d08002995675f10d065985257416/raw/811ad96a0567648ff858b4f14d0096ba241f28ef/quiz-data.json';
+xhr.open('GET', urlJSON);
 xhr.send(null);
 
 xhr.onreadystatechange = function () {
@@ -9,20 +10,22 @@ xhr.onreadystatechange = function () {
   if (xhr.readyState === DONE) {
     if (xhr.status === OK) {
       displayData();
+      findAllInputs();
     } else {
-      console.log('Error: ' + xhr.status); // An error occurred during the request.
+      console.log('Error: ' + xhr.status);
     }
   }
 };
 
 // display JSON Data
 function displayData() {
-	var res = xhr.responseText;
-	var resJSON = JSON.parse(res);
+	var res = xhr.responseText,
+	    resJSON = JSON.parse(res),
+        quizContent = document.querySelector('.quiz-content'),
+		questions = resJSON.questions,
+	    questionsNum = questions.length, // 9
+        answersNum;
 
-	var quizContent = document.querySelector('.quiz-content');
-	var questionsNum = resJSON.questions.length; // 9
-    var answersNum;
 
     // create a list - wrapper for all q&a
 	var questionList = document.createElement('ol');
@@ -32,33 +35,35 @@ function displayData() {
 	// get questions
 	for(var i = 0; i < questionsNum; i++) {
 		var questionListElem = document.createElement('li');
-		var questionText = document.createElement('h3');
-		questionText.innerHTML = resJSON.questions[i].question;
+		var questionText = document.createElement('p');
+		questionText.innerHTML = questions[i].question;
 
 		questionListElem.appendChild(questionText);
 		questionList.appendChild(questionListElem);
 
 		// get answers
-		answersNum = resJSON.questions[i].answers.length; //4
+		answersNum = questions[i].answers.length; //4
 		for(var j = 0; j < answersNum; j++) {
 			// create label and input elements for answers
 			var label = document.createElement('label');
 
-			var answer = document.createElement('input');
-			answer.type = 'radio';
-			answer.name = 'q'+[i+1];
-			answer.value = 'answer'+[j];
+			var input = document.createElement('input');
+			input.type = 'radio';
+			input.name = 'q'+[i+1];
+			input.value = input.name+'answer'+[j+1];
 
-			label.innerHTML = resJSON.questions[i].answers[j].answer;
-			label.insertBefore(answer, label.firstChild);
+			label.innerHTML = questions[i].answers[j].answer;
+			label.insertBefore(input, label.firstChild);
 			questionListElem.appendChild(label);
-
-
-			// var correctAnswer = resJSON.questions[i].answers[j].correct;
-			// console.log(correctAnswer);
 		}
 
 	}
+
+	// create a submit button
+	var submitButton = document.createElement('button');
+	submitButton.setAttribute('type', 'submit');
+	submitButton.innerHTML = 'Submit';
+	quizContent.appendChild(submitButton);
 
 }
 
@@ -79,14 +84,14 @@ function startTimer(duration, displayTimer) {
         }
     }, 1000);
 }
-
+// create a start button
 var startButton = document.querySelector('.start-button');
 
 startButton.addEventListener('click', function (e) {
  	e.stopPropagation();
-
  	startButton.classList.add('hidden');
-    var fiveMinutes = 20,
+
+    var fiveMinutes = 300, 
         displayTimer = document.querySelector('.timer'),
         quizContent = document.querySelector('.quiz-content');
 
@@ -95,4 +100,23 @@ startButton.addEventListener('click', function (e) {
 
     startTimer(fiveMinutes, displayTimer);
 });
+
+
+// find all inputs
+function findAllInputs() {
+	var allInputs = document.querySelectorAll('input[type=radio]');
+
+	for(var k = 0; k <allInputs.length; k++) {
+		console.log(allInputs[k]);
+		allInputs[k].addEventListener('click', function() {
+			
+			console.log(allInputs[k]);
+
+			// why undefined???
+		});
+	}
+}
+
+
+
 
