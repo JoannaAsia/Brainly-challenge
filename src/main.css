@@ -5,6 +5,10 @@
 	word-wrap: break-word;
 }
 
+.start-btn {
+	margin-top: 10px;
+}
+
 .timer {
 	font-size: 16px;
 	position: fixed;
