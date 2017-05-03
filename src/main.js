@@ -57,7 +57,6 @@ function submitQuiz(intervalId) {
 	quizContent.appendChild(submitButton);
 
 	submitButton.addEventListener('click', function() {
-		//timer.classList.add('main-content--hidden');
 		stopTimer(intervalId);
 		submitButton.classList.add('sg-button-primary--disabled');
 		evaluateScore();
