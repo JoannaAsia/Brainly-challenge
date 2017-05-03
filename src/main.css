@@ -1,6 +1,24 @@
-.quiz-content {
-	max-width: 700px;
-	margin: 0 auto;
+#main-content {
+	width: 100%;
+	margin: 20px auto;
+}
+
+.main-content__quiz {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.main-content__quiz__list {
+	margin: 20px auto;
+}
+
+.main-content__quiz__input {
+	margin-right: 10px;
+}
+
+.main-content--hidden {
+	display: none;
 }
 
 label {
@@ -8,10 +26,8 @@ label {
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2)
 }
 
-input {
-	margin-right: 10px;
-}
-
-.hidden {
-	display: none;
+@media (min-width: 1024px) {
+	#main-content {
+		width: 1000px;
+	}
 }

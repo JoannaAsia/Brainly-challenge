@@ -19,17 +19,17 @@ xhr.onreadystatechange = function () {
 
 // create a start quiz function
 function openQuiz() {
-	var startButton = document.querySelector('.start-button');
+	var startButton = document.querySelector('.main-content__start-btn');
 
 	startButton.addEventListener('click', function() {
- 	startButton.classList.add('hidden');
+ 	startButton.classList.add('main-content--hidden');
 
     var quizTime = 300, 
-        displayTimer = document.querySelector('.timer'),
-        quizContent = document.querySelector('.quiz-content');
+        displayTimer = document.querySelector('.main-content__timer'),
+        quizContent = document.querySelector('.main-content__quiz');
 
-    displayTimer.classList.remove('hidden');
-    quizContent.classList.remove('hidden');
+    displayTimer.classList.remove('main-content--hidden');
+    quizContent.classList.remove('main-content--hidden');
 
     // call all needed functions
     startTimer(quizTime, displayTimer);
@@ -40,7 +40,7 @@ function openQuiz() {
 
 // create a submit quiz function
 function submitQuiz() {
-    var quizContent = document.querySelector('.quiz-content')
+    var quizContent = document.querySelector('.main-content__quiz')
 	// create a submit button
 	var submitButton = document.createElement('button');
 	submitButton.setAttribute('type', 'submit');
@@ -49,7 +49,7 @@ function submitQuiz() {
 
 	submitButton.addEventListener('click', function() {
 		evaluateScore();
-		submitButton.classList.add('hidden');
+		submitButton.classList.add('main-content--hidden');
 	});
 }
 
@@ -93,7 +93,7 @@ function evaluateScore() {
 function displayData() {
 	var res = xhr.responseText,
 	    resJSON = JSON.parse(res),
-        quizContent = document.querySelector('.quiz-content'),
+        quizContent = document.querySelector('.main-content__quiz'),
 		questions = resJSON.questions,
 	    questionsNum = questions.length, 
         answersNum;
@@ -101,6 +101,7 @@ function displayData() {
 
     // create a list - wrapper for all q&a
 	var questionList = document.createElement('ol');
+	questionList.setAttribute('class', 'main-content__quiz__list sg-toplayer sg-toplayer--medium')
 	quizContent.appendChild(questionList);
 
 	// display questions
@@ -120,6 +121,7 @@ function displayData() {
 			// create label and input elements for answers
 			var label = document.createElement('label');
 			var input = document.createElement('input');
+			input.classList.add('main-content__quiz__input');
 			input.type = 'radio';
 			input.name = 'q'+[i+1];
 			input.value = inputValue;

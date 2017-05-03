@@ -16,12 +16,14 @@
 
         <main id="main-content">
             <header>
-                <h1>Welcome to JavaScript quiz!</h1>
-                <h2>5 minutes, 9 questions</h2>
-                <button class="start-button">Start</button>
+                <h1 class="sg-text-bit sg-text-bit--large sg-text-bit--alt">Welcome to JavaScript quiz!</h1>
+                <h2 class="sg-text-bit sg-text-bit--gray">Masz 5 minut i mnóstwo zabawy przed sobą.</h2>
+                <button class="main-content__start-btn">Start</button>
+                <div class="main-content__timer main-content--hidden">5:00</div>
             </header>
-            <aside class="timer hidden">5:00</aside>
-            <article class="quiz-content hidden"></article>
+            
+            <article class="main-content__quiz main-content--hidden">
+            </article>
         </main>
 
         <script type="text/javascript" src="src/main.js"></script>
