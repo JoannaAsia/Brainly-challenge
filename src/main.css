@@ -3,27 +3,90 @@
 	margin: 20px auto;
 }
 
-.main-content__quiz {
+.timer {
+	font-size: 16px;
+	position: fixed;
+	top: 2px;
+	right: 2px;
+	z-index: 999;
+}
+
+.quiz {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 }
 
-.main-content__quiz__list {
-	margin: 20px auto;
+.quiz__list {
+	margin: 40px auto;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: #fff;
+	transition: all 1s;
+	opacity: 1;
 }
 
-.main-content__quiz__input {
+.quiz__list-item {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.quiz__list-item-text {
+	width: 95%;
+}
+
+.quiz__input {
 	margin-right: 10px;
+}
+
+.quiz__label {
+	width: 95%;
+	line-height: 30px;
+	display: block;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2)
+}
+
+.quiz__btn {
+	margin: 20px auto;
+    min-width: 150px;
+}
+
+.quiz__score {
+	display: flex;
+	justify-content: center;
+}
+
+.quiz__score h2 {
+	font-size: 45px;
+	max-width: 25%;
+	margin-right: 5px;
+}
+.quiz__score p {
+	max-width: 75%;
+	margin-left: 5px;
 }
 
 .main-content--hidden {
 	display: none;
 }
 
-label {
-	display: block;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.2)
+.disabled {
+	opacity: 0.45;
+	background-color: #f0f3f5;
+}
+
+.good-luck {
+	padding: 10px 0;
+	font-weight: bold;
+	color: #7ed7ac;
+}
+
+@media (min-width: 768px) {
+	.timer {
+		top: 20px;
+		right: 20px;
+		font-size: 24px;
+	}
 }
 
 @media (min-width: 1024px) {

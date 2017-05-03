@@ -19,41 +19,61 @@ xhr.onreadystatechange = function () {
 
 // create a start quiz function
 function openQuiz() {
-	var startButton = document.querySelector('.main-content__start-btn');
+	var startButton = document.querySelector('.start-btn');
 
 	startButton.addEventListener('click', function() {
- 	startButton.classList.add('main-content--hidden');
+		var goodLuck = document.createElement('p');
+		goodLuck.classList.add('good-luck');
+		goodLuck.innerHTML = "POWODZENIA :-)";
 
-    var quizTime = 300, 
-        displayTimer = document.querySelector('.main-content__timer'),
-        quizContent = document.querySelector('.main-content__quiz');
+ 		startButton.classList.add('main-content--hidden');
 
-    displayTimer.classList.remove('main-content--hidden');
-    quizContent.classList.remove('main-content--hidden');
+    	var quizTime = 300, 
+        	displayTimer = document.querySelector('.timer'),
+        	quizContent = document.querySelector('.quiz');
 
-    // call all needed functions
-    startTimer(quizTime, displayTimer);
-    displayData();
-    submitQuiz();
+    	displayTimer.classList.remove('main-content--hidden');
+    	quizContent.classList.remove('main-content--hidden');
+
+        quizContent.appendChild(goodLuck);
+
+    	startTimer(quizTime, displayTimer);
+    	displayData();
+    	submitQuiz();
 	});
 }
 
-// create a submit quiz function
+// create a function to submit the quiz
 function submitQuiz() {
-    var quizContent = document.querySelector('.main-content__quiz')
+    var quizContent = document.querySelector('.quiz'),
+    	timer = document.querySelector('.timer');
 	// create a submit button
 	var submitButton = document.createElement('button');
 	submitButton.setAttribute('type', 'submit');
-	submitButton.innerHTML = 'Submit';
+	submitButton.setAttribute('class', 'quiz__btn sg-button-primary');
+	submitButton.innerHTML = 'Zatwierdź';
 	quizContent.appendChild(submitButton);
 
 	submitButton.addEventListener('click', function() {
+		timer.classList.add('main-contenthidden');
+		submitButton.classList.add('sg-button-primary--disabled');
 		evaluateScore();
-		submitButton.classList.add('main-content--hidden');
+		disableQuiz();
 	});
 }
 
-// create  a function that gets all selected answers
+// create a function that makes quize non inteactive
+function disableQuiz() {
+	var allAnswers = document.querySelectorAll('input[type=radio]'),
+	    quizContent = document.querySelector('.quiz__list');
+
+	for(var l = 0; l < allAnswers.length; l++) {
+		allAnswers[l].disabled = true;
+	}
+	quizContent.classList.add('disabled');
+}
+
+// create a function that gets all selected answers
 function evaluateScore() {
 	var allAnswers = document.querySelectorAll('input[type=radio]'),
 		score = 0;
@@ -70,17 +90,18 @@ function evaluateScore() {
 	    displayScore = document.createElement('h2'),
 	    displayScoreDesc = document.createElement('p');
 
+	evaluation.classList.add('quiz__score');
 
 	displayScore.innerHTML = score + '/9';
 
 	if(score < 4) {
-		displayScoreDesc.innerHTML = 'Nie masz co się wstydzić... czas zabrać się do pracy!';
+		displayScoreDesc.innerHTML = '...czas zabrać się do pracy!';
 	}
 	if(score >= 4) {
 		displayScoreDesc.innerHTML = 'Całkiem nieźle mistrzu, ale stać Cię na więcej!';
 	}
 	if(score > 7) {
-		displayScoreDesc.innerHTML = 'Świetna robota!!!';
+		displayScoreDesc.innerHTML = 'Świetna robota! Gratulacje :-)';
 	}
 
 	var mainContent = document.getElementById('main-content');
@@ -89,25 +110,26 @@ function evaluateScore() {
 	evaluation.appendChild(displayScoreDesc);
 }
 
-// display JSON Data
+// display JSON Data in HTML
 function displayData() {
 	var res = xhr.responseText,
 	    resJSON = JSON.parse(res),
-        quizContent = document.querySelector('.main-content__quiz'),
+        quizContent = document.querySelector('.quiz'),
 		questions = resJSON.questions,
 	    questionsNum = questions.length, 
         answersNum;
 
-
     // create a list - wrapper for all q&a
 	var questionList = document.createElement('ol');
-	questionList.setAttribute('class', 'main-content__quiz__list sg-toplayer sg-toplayer--medium')
+	questionList.setAttribute('class', 'quiz__list sg-toplayer sg-toplayer--medium')
 	quizContent.appendChild(questionList);
 
 	// display questions
 	for(var i = 0; i < questionsNum; i++) {
 		var questionListElem = document.createElement('li');
+		questionListElem.classList.add('quiz__list-item')
 		var questionText = document.createElement('p');
+		questionText.classList.add('quiz__list-item-text');
 		questionText.innerHTML = questions[i].question;
 
 		questionListElem.appendChild(questionText);
@@ -120,8 +142,9 @@ function displayData() {
 
 			// create label and input elements for answers
 			var label = document.createElement('label');
+			label.classList.add('quiz__label');
 			var input = document.createElement('input');
-			input.classList.add('main-content__quiz__input');
+			input.classList.add('quiz__input');
 			input.type = 'radio';
 			input.name = 'q'+[i+1];
 			input.value = inputValue;
@@ -145,14 +168,12 @@ function startTimer(duration, displayTimer) {
         displayTimer.textContent = minutes + ":" + seconds;
 
         if (--duration < 0) {
-        displayTimer.textContent = 'Your time is up!!!';
         stopTimer(intervalId);
-    }
-
+    	}
     }, 1000);
 }
 
+// create a stop timer function
 function stopTimer(interval) {
 	clearInterval(interval);
 };
-
