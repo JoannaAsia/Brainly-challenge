@@ -1,3 +1,5 @@
+'use strict';
+
 //load the external JSON
 var xhr = new XMLHttpRequest(),
 	urlJSON = 'https://cdn.rawgit.com/kdzwinel/cd08d08002995675f10d065985257416/raw/811ad96a0567648ff858b4f14d0096ba241f28ef/quiz-data.json';
@@ -6,15 +8,15 @@ xhr.open('GET', urlJSON);
 xhr.send(null);
 
 xhr.onreadystatechange = function () {
-  var DONE = 4; 
-  var OK = 200;
-  if (xhr.readyState === DONE) {
-    if (xhr.status === OK) {
-      openQuiz();
-    } else {
-      console.log('Error: ' + xhr.status);
-    }
-  }
+	var DONE = 4; 
+    var OK = 200;
+  		if (xhr.readyState === DONE) {
+    		if (xhr.status === OK) {
+      			openQuiz();
+    	} else {
+      		console.log('Error: ' + xhr.status);
+    	}
+  	}
 };
 
 // create a start quiz function
@@ -37,14 +39,14 @@ function openQuiz() {
 
         quizContent.appendChild(goodLuck);
 
-    	startTimer(quizTime, displayTimer);
+    	var intervalId = startTimer(quizTime, displayTimer);
     	displayData();
-    	submitQuiz();
+    	submitQuiz(intervalId);
 	});
 }
 
 // create a function to submit the quiz
-function submitQuiz() {
+function submitQuiz(intervalId) {
     var quizContent = document.querySelector('.quiz'),
     	timer = document.querySelector('.timer');
 	// create a submit button
@@ -55,7 +57,8 @@ function submitQuiz() {
 	quizContent.appendChild(submitButton);
 
 	submitButton.addEventListener('click', function() {
-		timer.classList.add('main-contenthidden');
+		//timer.classList.add('main-content--hidden');
+		stopTimer(intervalId);
 		submitButton.classList.add('sg-button-primary--disabled');
 		evaluateScore();
 		disableQuiz();
@@ -168,9 +171,11 @@ function startTimer(duration, displayTimer) {
         displayTimer.textContent = minutes + ":" + seconds;
 
         if (--duration < 0) {
-        stopTimer(intervalId);
+        	stopTimer(intervalId);
     	}
     }, 1000);
+
+    return  intervalId;
 }
 
 // create a stop timer function

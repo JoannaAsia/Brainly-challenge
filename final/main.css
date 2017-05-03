@@ -1,6 +1,8 @@
 #main-content {
 	width: 100%;
-	margin: 20px auto;
+	margin: 0 auto;
+	word-wrap: break-word;
+	padding: 10px;
 }
 
 .timer {
@@ -28,6 +30,7 @@
 	background-color: #fff;
 	transition: all 1s;
 	opacity: 1;
+	width: 100%;
 }
 
 .quiz__list-item {
